@@ -48,21 +48,13 @@ if ($selection -eq "1") {
 # Connect to Celerant Database
 Write-Host "Connecting to Celerant Database..." -ForegroundColor Cyan
 
-# Ask for Username and Password in the console
-$passSecure = Read-Host "Enter $($config.Celerant.Username) SQL Password" -AsSecureString
-
-# Convert to plain text for the SQL Driver
-$passPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto(
-    [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($passSecure)
-)
-
 # Set up SQL parameters
 $sqlParams = @{
     ServerInstance         = $config.Celerant.ServerInstance
     Database               = $config.Celerant.Database
 	InputFile              = $sqlFilePath
 	Username               = $config.Celerant.Username
-	Password               = $passPlain
+	Password               = $config.Celerant.Password
 	Encrypt                = "Mandatory"
 	TrustServerCertificate = $true
 }
@@ -76,6 +68,8 @@ try {
 	Set-ExcelRange -Worksheet $excelPackage.Workbook.Worksheets["Sheet1"] -Range "B:B" -NumberFormat "@"
 	
 	$excelPackage | Close-ExcelPackage
+	
+	Write-Host "Done." -ForegroundColor Cyan
 } catch {
     Write-Host "Error: $_" -ForegroundColor DarkRed
 }
