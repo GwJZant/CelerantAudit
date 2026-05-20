@@ -37,7 +37,10 @@ if ($selection -eq "1") {
 	$sqlFilePath = "$PSScriptRoot\Queries\CelerantTaxStatusAudit.sql"
 	$excelPath = $outputFolderPath + "TaxStatusAudit_$timestamp.xlsx"
 } elseif ($selection -eq "2") {
-	Write-Host "A report will be generated displaying all active products with no inventory that has no sales history in the past 12 months."
+	Write-Host ""
+	Write-Host "A report will be generated displaying all active products with no inventory that has no sales/receiving history in the past 12 months."
+	Write-Host "To import this, you'll want to copy the following columns to a new .csv file in batches of no more than 450: Brand, Style, Description1, Barcode Lookup, Active Product" -ForegroundColor DarkRed
+	Write-Host ""
 	
 	$sqlFilePath = "$PSScriptRoot\Queries\CelerantInactivityCheckerAudit.sql"
 	$excelPath = $outputFolderPath + "CelerantInactivityCheckerAudit_$timestamp.xlsx"
@@ -61,6 +64,8 @@ $sqlParams = @{
 
 try {
     $productData = Invoke-Sqlcmd @sqlParams
+	
+	Write-Host "Processing data..." -ForegroundColor Cyan
 	
 	$excelPackage = $productData | Select-Object * -ExcludeProperty RowError, RowState, Table, ItemArray, HasErrors | Export-Excel -Path $excelPath -WorksheetName "Sheet1" -AutoSize -BoldTopRow -PassThru
 		
