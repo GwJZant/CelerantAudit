@@ -26,11 +26,7 @@ This report contains all products matching a selection of criteria to indicate t
 5. Last Received date is at least 1 year ago
 
 HOW TO RUN:
-Right-click CelerantAudit.ps1 and select "Run with PowerShell"
-
-Alternatively, Shift + Right-click anywhere in the folder (don't Shift + Right-click the file itself) and select "Open PowerShell window here" to open a PowerShell window first. This will make it so the command prompt window won't close as soon as this tool finishes which will let you inspect the output if you wish. To run the script with this method, type (or copy and paste) the following:
-
-./CelerantAudit.ps1
+Double-click CelerantAudit.bat
 
 HOW TO INSTALL MODULES:
 Open PowerShell by searching for it with the Start menu or shift + right-click the whitespace of any folder's window and click "Open PowerShell window here"
